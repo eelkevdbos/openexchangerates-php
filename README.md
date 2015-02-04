@@ -1,5 +1,5 @@
-# openexchangerates-php
-===============
+openexchangerates-php
+============
 
 [![Build Status](https://travis-ci.org/eelkevdbos/openexchangerates-php.svg)](https://travis-ci.org/eelkevdbos/openexchangerates-php) 
 

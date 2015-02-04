@@ -2,4 +2,4 @@
 
 include "bootstrap.php";
 
-echo $client->latest();
+echo $exchange->latest();

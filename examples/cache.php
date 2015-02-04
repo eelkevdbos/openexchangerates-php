@@ -6,8 +6,8 @@ include "bootstrap.php";
 \GuzzleHttp\Subscriber\Cache\CacheSubscriber::attach($guzzle);
 
 //enable debug mode to see outgoing requests
-$client->debug();
+$exchange->debug();
 
 //request is only executed once, promised
-$client->latest();
-$client->latest();
+$exchange->latest();
+$exchange->latest();

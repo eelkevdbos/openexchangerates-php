@@ -10,6 +10,20 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
     use Configuration\Configurable;
 
     /**
+     * OpenExchangeRates.org base url for API
+     *
+     * @var string
+     */
+    const BASE_URL = '{protocol}://openexchangerates.org/api/';
+
+    /**
+     * Available request query params
+     *
+     * @var array
+     */
+    static $availableRequestParams = ['base', 'app_id', 'symbols', 'start', 'end', 'prettyprint'];
+
+    /**
      * @var ClientInterface
      */
     protected $client;
@@ -152,7 +166,7 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
      */
     protected function getRequestQuery()
     {
-        return $this->getOptions(Api::getAvailableRequestOptions());
+        return $this->getOptions(static::getAvailableRequestParams());
     }
 
     /**
@@ -187,6 +201,16 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
         }
 
         return $dateQuery;
+    }
+
+    public static function getAvailableRequestParams()
+    {
+        return static::$availableRequestParams;
+    }
+
+    public static function getBaseUrl($secure = true)
+    {
+        return str_replace('{protocol}', $secure === true ? 'https' : 'http', static::BASE_URL);
     }
 
 }

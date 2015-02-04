@@ -2,4 +2,4 @@
 
 include "bootstrap.php";
 
-echo $client->currencies();
+echo $exchange->currencies();

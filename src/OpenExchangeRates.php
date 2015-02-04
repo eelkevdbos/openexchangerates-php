@@ -4,7 +4,7 @@
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\RequestInterface;
 
-class OpenExchangeRates
+class OpenExchangeRates implements OpenExchangeRatesInterface
 {
 
     use Configuration\Configurable;

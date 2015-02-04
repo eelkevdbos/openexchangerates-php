@@ -1,0 +1,11 @@
+{
+    "autoload": {
+        "psr-4": {
+            "EvdB\\OpenExchangeRates\\": "src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "~5.2",
+        "guzzlehttp/cache-subscriber": "dev-master"
+    }
+}

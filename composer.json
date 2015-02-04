@@ -1,5 +1,5 @@
 {
-    "name": "eelkevdbos/firebase-php",
+    "name": "eelkevdbos/openexchangerates-php",
     "description": "OpenExchangeRates.org API wrapper written in PHP",
     "license": "MIT",
     "keywords": ["exchangerate", "currency", "currency conversion"],

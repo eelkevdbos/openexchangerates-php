@@ -1,4 +1,12 @@
 {
+    "name": "eelkevdbos/firebase-php",
+    "description": "OpenExchangeRates.org API wrapper written in PHP",
+    "license": "MIT",
+    "keywords": ["exchangerate", "currency", "currency conversion"],
+    "authors": [{
+        "name": "Eelke van den Bos",
+        "email": "eelkevdbos@gmail.com"
+    }],
     "autoload": {
         "psr-4": {
             "EvdB\\OpenExchangeRates\\": "src/"

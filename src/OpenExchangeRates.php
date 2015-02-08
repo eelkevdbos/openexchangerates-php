@@ -238,7 +238,7 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
     {
         $dateQuery = false;
 
-        if ($date instanceof \DateTimeInterface) {
+        if ($date instanceof \DateTime) {
 
             $dateQuery = $date->format('Y-m-d');
 

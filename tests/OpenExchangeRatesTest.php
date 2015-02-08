@@ -55,7 +55,7 @@ class TestOpenExchangeRates extends PHPUnit_Framework_TestCase
         $interfaceMethods = [
             'latest' => [],
             'currencies' => [],
-            'historical' => [DateTime::createFromFormat('Y-m-d', '2015-12-31')],
+            'historical' => [DateTime::createFromFormat('Y-m-d', '2015-12-29')],
             'timeSeries' => [DateTime::createFromFormat('Y-m-d', '2015-12-30'), DateTime::createFromFormat('Y-m-d', '2015-12-31')],
             'convert' => [rand(0, 100), 'USD', 'EUR']
         ];

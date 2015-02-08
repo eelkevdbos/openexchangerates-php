@@ -1,6 +1,7 @@
 <?php namespace EvdB\OpenExchangeRates;
 
 
+use EvdB\OpenExchangeRates\Exception\ResourceNotFound;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\RequestInterface;
 
@@ -21,12 +22,24 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
      *
      * @var array
      */
-    static $availableRequestParams = ['base', 'app_id', 'symbols', 'start', 'end', 'prettyprint'];
+    static $availableQueryParams = ['base', 'app_id', 'symbols', 'start', 'end', 'prettyprint'];
+
+    /**
+     * Available API methods
+     *
+     * @var array
+     */
+    static $availableApiMethods = ['latest', 'currencies', 'historical', 'timeSeries', 'convert'];
 
     /**
      * @var ClientInterface
      */
     protected $client;
+
+    /**
+     * @var array
+     */
+    protected $queuedQueryParams = [];
 
     /**
      * @param array $options
@@ -75,15 +88,13 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
 
     public function timeSeries($startDate, $endDate)
     {
-        $query = [
-            'start' => static::getFormattedQueryDate($startDate),
-            'end'   => static::getFormattedQueryDate($endDate)
-        ];
+        $this->queueQueryParam('start', static::getFormattedQueryDate($startDate));
+        $this->queueQueryParam('end', static::getFormattedQueryDate($endDate));
 
         $request = $this->createRequest(
             'GET',
             'time-series.json',
-            array_replace_recursive($this->getRequestOptions(), compact('query'))
+            $this->getRequestOptions()
         );
 
         $this->handleRequest($request);
@@ -109,6 +120,24 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
     {
         $this->setOption('prettyprint', 1);
         $this->client->setDefaultOption('debug', true);
+    }
+
+    /**
+     * Call a public method with arguments and supply a jsonp callback argument
+     *
+     * @param string $method
+     * @param array $args
+     * @param string $callback
+     */
+    public function jsonp($method, array $args, $callback)
+    {
+        if (!in_array($method, static::getAvailableApiMethods())) {
+            throw new ResourceNotFound("Resource {$method} not available");
+        }
+
+        $this->queueQueryParam('callback', $callback);
+
+        return call_user_func_array([$this, $method], $args);
     }
 
     /**
@@ -150,12 +179,19 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
     }
 
     /**
+     * Build an array with ClientInterface options
+     *
      * @author Eelke van den Bos <eelkevdbos@gmail.com>
      * @return array
      */
     protected function getRequestOptions()
     {
-        return ['query' => $this->getRequestQuery()];
+        return [
+            'query' => array_merge(
+                $this->getQueryParams(),
+                $this->getQueuedQueryParams()
+            )
+        ];
     }
 
     /**
@@ -164,9 +200,30 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
      * @author Eelke van den Bos <eelkevdbos@gmail.com>
      * @return array
      */
-    protected function getRequestQuery()
+    protected function getQueryParams()
     {
-        return $this->getOptions(static::getAvailableRequestParams());
+        return $this->getOptions(static::getAvailableQueryParams());
+    }
+
+    /**
+     * Queue a query param for execution
+     * @param $key
+     * @param $value
+     */
+    protected function queueQueryParam($key, $value)
+    {
+        $this->queuedQueryParams[$key] = $value;
+    }
+
+    /**
+     * Retrieve queued query params and empty the queue
+     * @return array
+     */
+    protected function getQueuedQueryParams()
+    {
+        $params = $this->queuedQueryParams;
+        $this->queuedQueryParams = [];
+        return $params;
     }
 
     /**
@@ -177,7 +234,7 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
      * @throws \InvalidArgumentException
      * @return string
      */
-    static function getFormattedQueryDate($date)
+    public static function getFormattedQueryDate($date)
     {
         $dateQuery = false;
 
@@ -203,11 +260,26 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
         return $dateQuery;
     }
 
-    public static function getAvailableRequestParams()
+    /**
+     * @return array
+     */
+    public static function getAvailableQueryParams()
     {
-        return static::$availableRequestParams;
+        return static::$availableQueryParams;
     }
 
+    /**
+     * @return array
+     */
+    public static function getAvailableApiMethods()
+    {
+        return static::$availableApiMethods;
+    }
+
+    /**
+     * @param bool $secure
+     * @return mixed
+     */
     public static function getBaseUrl($secure = true)
     {
         return str_replace('{protocol}', $secure === true ? 'https' : 'http', static::BASE_URL);

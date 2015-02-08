@@ -1,7 +1,8 @@
 <?php namespace EvdB\OpenExchangeRates;
 
 
-interface OpenExchangeRatesInterface {
+interface OpenExchangeRatesInterface
+{
 
     public function latest();
 
@@ -12,5 +13,7 @@ interface OpenExchangeRatesInterface {
     public function timeSeries($startDate, $endDate);
 
     public function convert($value, $from, $to);
+
+    public function jsonp($method, array $args, $callback);
 
 }

@@ -15,8 +15,8 @@
          bootstrap="vendor/autoload.php"
         >
     <testsuites>
-        <testsuite name="EvdB OpenExchangeRates test suite">
-            <directory>./tests/</directory>
+        <testsuite name="EvdB OpenExchangeRates">
+            <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
     <filter>

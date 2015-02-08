@@ -4,7 +4,7 @@
 trait Configurable
 {
 
-    protected $configuration;
+    protected $configuration = [];
 
     public function setDefaultOptions($options)
     {

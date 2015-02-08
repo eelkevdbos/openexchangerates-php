@@ -73,9 +73,9 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
         return $this->handleRequest($request);
     }
 
-    public function historical($date)
+    public function historical($selectedDate)
     {
-        $queryDate = static::getFormattedQueryDate($date);
+        $queryDate = static::getFormattedQueryDate($selectedDate);
 
         $request = $this->createRequest(
             'GET',

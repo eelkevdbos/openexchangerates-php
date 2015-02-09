@@ -85,7 +85,7 @@ class TestOpenExchangeRates extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \EvdB\OpenExchangeRates\Exception\InvalidDateArgument
      */
     public function testQueryDateFormatter()
     {

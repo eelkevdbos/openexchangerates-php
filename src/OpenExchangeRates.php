@@ -227,37 +227,14 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
     }
 
     /**
-     * Return a valid format
+     * Retrieve a correctly formatted date string
      *
      * @param \DateTimeInterface|int|string $date
-     * @author Eelke van den Bos <eelkevdbos@gmail.com>
-     * @throws \InvalidArgumentException
      * @return string
      */
     public static function getFormattedQueryDate($date)
     {
-        $dateQuery = false;
-
-        if ($date instanceof \DateTime) {
-
-            $dateQuery = $date->format('Y-m-d');
-
-        } else if (is_numeric($date)) {
-
-            //suspect unix timestamp given
-            $dateQuery = date('Y-m-d', $date);
-
-        } else if (is_string($date) && preg_match('/[\d]{4}-[\d]{2}-[\d]{2}/', $date) === 1) {
-
-            $dateQuery = $date;
-
-        }
-
-        if ($dateQuery === false) {
-            throw new \InvalidArgumentException('Date argument could not be resolved');
-        }
-
-        return $dateQuery;
+        return DateFormatter::format($date, 'Y-m-d');
     }
 
     /**

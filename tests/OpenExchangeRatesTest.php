@@ -84,9 +84,6 @@ class OpenExchangeRatesTest extends PHPUnit_Framework_TestCase
         $exchange->jsonp('invalid', [], 'myInvalidCallback');
     }
 
-    /**
-     * @expectedException \EvdB\OpenExchangeRates\Exception\InvalidDateArgument
-     */
     public function testQueryDateFormatter()
     {
         $dateFromDateTime = OpenExchangeRates::getFormattedQueryDate(DateTime::createFromFormat('Y-m-d', '2015-12-31'));
@@ -100,9 +97,6 @@ class OpenExchangeRatesTest extends PHPUnit_Framework_TestCase
         $dateFromString = OpenExchangeRates::getFormattedQueryDate('2015-05-10');
 
         $this->assertEquals('2015-05-10', $dateFromString);
-
-        //throws expected exception
-        $mumboJumboDateTime = OpenExchangeRates::getFormattedQueryDate('this-is-invalid');
 
         if (!interface_exists('DateTimeInterface')) {
 
@@ -119,6 +113,21 @@ class OpenExchangeRatesTest extends PHPUnit_Framework_TestCase
 
             $this->assertEquals(date('Y-m-d', $mytime), OpenExchangeRates::getFormattedQueryDate($dateTimeImplementation));
         }
+    }
+
+    /**
+     * @expectedException \EvdB\OpenExchangeRates\Exception\InvalidDateArgument
+     */
+    public function testQueryDateFormatterFailingByInvalidString(){
+        OpenExchangeRates::getFormattedQueryDate('this-is-invalid');
+    }
+
+    /**
+     * @expectedException \EvdB\OpenExchangeRates\Exception\InvalidDateArgument
+     */
+    public function testQueryDateFormatterFailingByStdClass()
+    {
+        OpenExchangeRates::getFormattedQueryDate(new stdClass());
     }
 
     public function testBuildingBaseUrl()

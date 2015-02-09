@@ -6,7 +6,7 @@ use EvdB\OpenExchangeRates\OpenExchangeRates;
 use GuzzleHttp\Subscriber\Mock;
 use GuzzleHttp\Message\Response;
 
-class TestOpenExchangeRates extends PHPUnit_Framework_TestCase
+class OpenExchangeRatesTest extends PHPUnit_Framework_TestCase
 {
 
     /**

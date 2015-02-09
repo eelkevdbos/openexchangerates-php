@@ -144,7 +144,7 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
      * Proxy the creation of the request to the ClientInterface implementation
      *
      * @param $method
-     * @param null $url
+     * @param string|null $url
      * @param array $options
      * @author Eelke van den Bos <eelkevdbos@gmail.com>
      * @return RequestInterface

@@ -17,7 +17,6 @@
     <testsuites>
         <testsuite name="EvdB OpenExchangeRates">
             <directory suffix="Test.php">./tests</directory>
-            <exclude>./examples</exclude>
         </testsuite>
     </testsuites>
     <filter>

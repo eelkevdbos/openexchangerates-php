@@ -39,7 +39,7 @@ class ConfigurableTraitTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(['base' => 'only'], $this->config->getOptions());
     }
 
-    public function setDefaultOptions()
+    public function testSetDefaultOptions()
     {
         $options = ['base' => 'base', 'extend' => 'extend'];
         $this->config->setOptions($options);

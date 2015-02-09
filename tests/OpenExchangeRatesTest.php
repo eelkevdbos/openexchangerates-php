@@ -118,6 +118,14 @@ class OpenExchangeRatesTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException \EvdB\OpenExchangeRates\Exception\InvalidDateArgument
      */
+    public function testQueryDateFormatterFailingByBoolean()
+    {
+        OpenExchangeRates::getFormattedQueryDate(false);
+    }
+
+    /**
+     * @expectedException \EvdB\OpenExchangeRates\Exception\InvalidDateArgument
+     */
     public function testQueryDateFormatterFailingByInvalidString(){
         OpenExchangeRates::getFormattedQueryDate('this-is-invalid');
     }

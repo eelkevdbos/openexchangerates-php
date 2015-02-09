@@ -240,28 +240,23 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
      */
     public static function getFormattedQueryDate($date)
     {
-        $dateQuery = false;
-
         if ($date instanceof \DateTime) {
 
-            $dateQuery = $date->format('Y-m-d');
+            return $date->format('Y-m-d');
 
-        } else if (is_numeric($date)) {
+        } elseif (preg_match('/[\d]{4}-[\d]{2}-[\d]{2}/', $date) === 1) {
 
-            //suspect unix timestamp given
-            $dateQuery = date('Y-m-d', $date);
+            return $date;
 
-        } else if (is_string($date) && preg_match('/[\d]{4}-[\d]{2}-[\d]{2}/', $date) === 1) {
-
-            $dateQuery = $date;
-
+        } elseif ($formatted = date('Y-m-d', $date) !== false) {
+            
+            return $formatted;
+            
+        } else {
+            
+            throw new \InvalidArgumentException('Date argument could not be resolved');    
+            
         }
-
-        if ($dateQuery === false) {
-            throw new \InvalidArgumentException('Date argument could not be resolved');
-        }
-
-        return $dateQuery;
     }
 
     /**

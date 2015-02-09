@@ -1,6 +1,5 @@
 <?php namespace EvdB\OpenExchangeRates;
 
-
 use EvdB\OpenExchangeRates\Exception\ResourceNotFound;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\RequestInterface;
@@ -22,14 +21,14 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
      *
      * @var array
      */
-    static $availableQueryParams = ['base', 'app_id', 'symbols', 'start', 'end', 'prettyprint'];
+    protected static $availableQueryParams = ['base', 'app_id', 'symbols', 'start', 'end', 'prettyprint'];
 
     /**
      * Available API methods
      *
      * @var array
      */
-    static $availableApiMethods = ['latest', 'currencies', 'historical', 'timeSeries', 'convert'];
+    protected static $availableApiMethods = ['latest', 'currencies', 'historical', 'timeSeries', 'convert'];
 
     /**
      * @var ClientInterface
@@ -132,7 +131,7 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
     public function jsonp($method, array $args, $callback)
     {
         if (!in_array($method, static::getAvailableApiMethods())) {
-            throw new ResourceNotFound("Resource {$method} not available");
+            throw new ResourceNotFound('Resource ' . $method . ' not available');
         }
 
         $this->queueQueryParam('callback', $callback);
@@ -144,7 +143,7 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
      * Proxy the creation of the request to the ClientInterface implementation
      *
      * @param $method
-     * @param null $url
+     * @param string|null $url
      * @param array $options
      * @author Eelke van den Bos <eelkevdbos@gmail.com>
      * @return RequestInterface
@@ -167,6 +166,8 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
     }
 
     /**
+     * Handle the request by sending it or add it to the queue
+     * 
      * @param RequestInterface $request
      * @author Eelke van den Bos <eelkevdbos@gmail.com>
      * @return \GuzzleHttp\Stream\StreamInterface|null
@@ -207,6 +208,7 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
 
     /**
      * Queue a query param for execution
+     * 
      * @param $key
      * @param $value
      */
@@ -217,6 +219,7 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
 
     /**
      * Retrieve queued query params and empty the queue
+     * 
      * @return array
      */
     protected function getQueuedQueryParams()
@@ -238,22 +241,28 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
     }
 
     /**
+     * Retrieve the available query parameters for the openexchangerates.org api
+     * 
      * @return array
      */
     public static function getAvailableQueryParams()
     {
-        return static::$availableQueryParams;
+        return self::$availableQueryParams;
     }
 
     /**
+     * Retrieve the available methods for the openexchangerates.org api
+     * 
      * @return array
      */
     public static function getAvailableApiMethods()
     {
-        return static::$availableApiMethods;
+        return self::$availableApiMethods;
     }
 
     /**
+     * Retrieve the base_url for the openexchangerates.org api with the correct protocol prefix
+     * 
      * @param bool $secure
      * @return mixed
      */
@@ -261,5 +270,4 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
     {
         return str_replace('{protocol}', $secure === true ? 'https' : 'http', static::BASE_URL);
     }
-
 }

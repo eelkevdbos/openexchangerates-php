@@ -248,9 +248,9 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
 
             return $date;
 
-        } elseif ($formatted = date('Y-m-d', $date) !== false) {
+        } elseif (date('Y-m-d', $date) !== false) {
             
-            return $formatted;
+            return date('Y-m-d', $date);
             
         } else {
             

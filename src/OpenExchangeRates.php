@@ -22,14 +22,14 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
      *
      * @var array
      */
-    static $availableQueryParams = ['base', 'app_id', 'symbols', 'start', 'end', 'prettyprint'];
+    protected static $availableQueryParams = ['base', 'app_id', 'symbols', 'start', 'end', 'prettyprint'];
 
     /**
      * Available API methods
      *
      * @var array
      */
-    static $availableApiMethods = ['latest', 'currencies', 'historical', 'timeSeries', 'convert'];
+    protected static $availableApiMethods = ['latest', 'currencies', 'historical', 'timeSeries', 'convert'];
 
     /**
      * @var ClientInterface

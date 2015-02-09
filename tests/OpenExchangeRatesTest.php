@@ -103,6 +103,22 @@ class OpenExchangeRatesTest extends PHPUnit_Framework_TestCase
 
         //throws expected exception
         $mumboJumboDateTime = OpenExchangeRates::getFormattedQueryDate('this-is-invalid');
+
+        if (!interface_exists('DateTimeInterface')) {
+
+            eval('
+                interface DateTimeInterface {
+                    public function format($format);
+                }
+
+                class MyDate extends DateTime implements DateTimeInterface {}
+            ');
+
+            $dateTimeImplementation = new MyDate();
+            $dateTimeImplementation->setTimestamp($mytime = time());
+
+            $this->assertEquals(date('Y-m-d', $mytime), OpenExchangeRates::getFormattedQueryDate($dateTimeImplementation));
+        }
     }
 
     public function testBuildingBaseUrl()

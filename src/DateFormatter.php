@@ -40,14 +40,8 @@ class DateFormatter
      */
     protected static function factorFromObject($input)
     {
-        if (interface_exists('DateTimeInterface') && $input instanceof \DateTimeInterface) {
-
+        if ($input instanceof DateTime || (interface_exists('DateTimeInterface') && $input instanceof \DateTimeInterface)) {
             return $input;
-
-        } elseif ($input instanceof DateTime) {
-
-            return $input;
-
         }
 
         throw new InvalidDateArgument('Object does not implement DateTimeInterface');

@@ -132,7 +132,7 @@ class OpenExchangeRates implements OpenExchangeRatesInterface
     public function jsonp($method, array $args, $callback)
     {
         if (!in_array($method, static::getAvailableApiMethods())) {
-            throw new ResourceNotFound("Resource " . $method . " not available");
+            throw new ResourceNotFound('Resource ' . $method . ' not available');
         }
 
         $this->queueQueryParam('callback', $callback);

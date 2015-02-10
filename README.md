@@ -36,4 +36,4 @@ $exchange->jsonp('timeSeries', ['2015-01-01', '2015-01-02'], 'myTimeseriesCallba
 
 ## Simple caching
 
-Guzzle provides us with a cache subscriber for the request client. For more information, please read the (https://github.com/guzzle/cache-subscriber)[cache-subscriber] docs.
+Guzzle provides us with a cache subscriber for the request client. For more information, please read the [cache-subscriber](https://github.com/guzzle/cache-subscriber) docs.

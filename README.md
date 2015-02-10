@@ -34,6 +34,12 @@ $exchange->jsonp('timeSeries', ['2015-01-01', '2015-01-02'], 'myTimeseriesCallba
 
 ```
 
+All methods return the json data structure as noted in the [API docs](https://openexchangerates.org/documentation) provided by OpenExchangeRates.org.
+
 ## Simple caching
 
 Guzzle provides us with a cache subscriber for the request client. For more information, please read the [cache-subscriber](https://github.com/guzzle/cache-subscriber) docs.
+
+## Disclaimer
+
+This project is not affiliated in any way with OpenExchangeRates.org. It is intended to provide a useful service and comes with no warranty or any kind. The author is not responsible for any damages or problems incurred during usage of the API. Use at your own risk.
